@@ -4,6 +4,8 @@ from pyspotifycontrol import spotify_control
 # from spotifyqueue import SpotifyQueue
 from multiprocessing import Process, Queue
 import time
+import urllib2
+import json
 
 app = Flask(__name__)
 
@@ -20,7 +22,13 @@ def addToQueue():
 @app.route('/play', methods=['POST'])
 def playTrackPost():
     try:
-        spotify_control.playTrack(request.form['track_uri'])
+        print request.form
+        if 'track_uri' in request.form:
+            spotify_control.playTrack(request.form['track_uri'])
+        elif 'track_search' in request.form:
+            response = urllib2.urlopen('http://ws.spotify.com/search/1/track.json?q=' + request.form['track_search'].replace (" ", "+"))
+            data = json.load(response)
+            spotify_control.playTrack(data["tracks"][0]["href"])
         return jsonify({'status':'success'})
     except:
         return jsonify({'error':'Invalid request'})
