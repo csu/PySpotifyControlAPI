@@ -1,8 +1,9 @@
 #!/usr/bin/env python
 from flask import Flask, jsonify, request, url_for, redirect
 from pyspotifycontrol import spotify_control
-from spotifyqueue import SpotifyQueue
+# from spotifyqueue import SpotifyQueue
 from multiprocessing import Process, Queue
+import time
 
 app = Flask(__name__)
 
@@ -11,7 +12,7 @@ app = Flask(__name__)
 @app.route('/queue', methods=['POST'])
 def addToQueue():
     try:
-        queue.addSong([request.form['track_uri'], request.form['duration']])
+        queue.put([request.form['track_uri'], request.form['duration']])
         return jsonify({'added':{'track_uri': request.form['track_uri'], 'duration': request.form['duration']}})
     except:
         return jsonify({'error':'Invalid request'})
@@ -141,9 +142,18 @@ def jumpTo(position):
 #     programInfo['description'] = 'A REST API for controlling Spotify.'
 #     return jsonify(programInfo)
 
+def runQueue(queue):
+    while True:
+        if queue.empty():
+            time.sleep(3) # keep checking until the queue isn't empty
+        else:
+            nextSong = queue.get()
+            spotify_control.playTrack(nextSong[0])
+            time.sleep(float(nextSong[1]))
+
 if __name__ == '__main__':
-    queue = SpotifyQueue()
-    p = Process(target=queue.runQueue)
+    queue = Queue()
+    p = Process(target=runQueue, args=(queue,))
     p.start()
     app.run(host='0.0.0.0', debug=True)
     p.join()
