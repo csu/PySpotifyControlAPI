@@ -1,22 +1,20 @@
 #!/usr/bin/env python
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, url_for, redirect
 from pyspotifycontrol import spotify_control
+from spotifyqueue import SpotifyQueue
+from multiprocessing import Process, Queue
 
 app = Flask(__name__)
 
-@app.route('/', methods=['GET'])
-def index():
-    programInfo = dict()
-    programInfo['author'] = 'Christopher Su'
-    programInfo['author_url'] = 'http://christophersu.net/'
-    programInfo['name'] = 'PySpotifyControl'
-    programInfo['version'] = '0.0.1'
-    programInfo['project_url'] = 'http://github.com/csu'
-    programInfo['source_url'] = 'http://github.com/csu/PySpotifyControl/'
-    programInfo['description'] = 'A REST API for controlling Spotify.'
-    return jsonify(programInfo)
-
 #### POST routes ####
+
+@app.route('/queue', methods=['POST'])
+def addToQueue():
+    try:
+        queue.addSong([request.form['track_uri'], request.form['duration']])
+        return jsonify({'added':{'track_uri': request.form['track_uri'], 'duration': request.form['duration']}})
+    except:
+        return jsonify({'error':'Invalid request'})
 
 @app.route('/play', methods=['POST'])
 def playTrackPost():
@@ -43,6 +41,13 @@ def jumpToPost(position):
         return jsonify({'error':'Invalid request'})
 
 #### GET routes ####
+
+@app.route('/', methods=['GET'])
+def serveIndex():
+    try:
+        return app.send_static_file('index.html')
+    except:
+        return jsonify({'error':'Invalid request'})
 
 @app.route('/play/<track_uri>', methods=['GET'])
 def playTrack(track_uri):
@@ -124,5 +129,21 @@ def jumpTo(position):
     except:
         return jsonify({'error':'Invalid request'})
 
+# @app.route('/', methods=['GET'])
+# def index():
+#     programInfo = dict()
+#     programInfo['author'] = 'Christopher Su'
+#     programInfo['author_url'] = 'http://christophersu.net/'
+#     programInfo['name'] = 'PySpotifyControl'
+#     programInfo['version'] = '0.0.1'
+#     programInfo['project_url'] = 'http://github.com/csu'
+#     programInfo['source_url'] = 'http://github.com/csu/PySpotifyControl/'
+#     programInfo['description'] = 'A REST API for controlling Spotify.'
+#     return jsonify(programInfo)
+
 if __name__ == '__main__':
-    app.run(debug=True)
+    queue = SpotifyQueue()
+    p = Process(target=queue.runQueue)
+    p.start()
+    app.run(host='0.0.0.0', debug=True)
+    p.join()
