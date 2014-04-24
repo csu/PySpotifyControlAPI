@@ -11,15 +11,19 @@ scripts = {
     "next": 'tell application "Spotify" to next track',
     "previous": 'tell application "Spotify" to previous track',
     "jumpTo": 'tell application "Spotify" to set player position to %s',
-    "getId": 'tell application "Spotify"\nset cstate to current track\'s id\nend tell'
+    "getSongId": 'tell application "Spotify"\nset cstate to current track\'s id\nend tell',
+    "getSongDuration": 'tell application "Spotify"\nset cstate to current track\'s duration\nend tell'
 }
 
 def run(ascript):
   osa = subprocess.Popen(['osascript', '-'], stdin=subprocess.PIPE, stdout=subprocess.PIPE)
   return osa.communicate(ascript)[0]
 
-def getId():
-    return run(scripts["getId"]).rstrip()
+def getSongId():
+    return run(scripts["getSongId"]).rstrip()
+
+def getSongDuration():
+    return int(run(scripts["getSongDuration"]).rstrip())
 
 def volumeUp():
     run(scripts["volumeUp"])
