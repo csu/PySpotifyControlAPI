@@ -1,11 +1,8 @@
 #!/usr/bin/env python
 from flask import Flask, jsonify
-import applescript
+from pyspotifycontrol import spotify_control
 
 app = Flask(__name__)
-
-def playTrack(track_uri):
-    applescript.run('tell application "Spotify" to play track "' + track_uri + '"')
 
 @app.route('/', methods=['GET'])
 def index():
@@ -22,7 +19,7 @@ def index():
 @app.route('/play/<track_uri>', methods=['GET'])
 def getIdea(track_uri):
     try:
-        playTrack(track_uri)
+        spotify_control.playTrack(track_uri)
         return jsonify({'status':'success'})
     except:
         return jsonify({'error':'Invalid request'})
