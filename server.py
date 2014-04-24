@@ -66,6 +66,16 @@ def playTrack(track_uri):
     except:
         return jsonify({'error':'Invalid request'})
 
+@app.route('/play/search/<track_search>', methods=['GET'])
+def playSearchTrack(track_search):
+    try:
+        response = urllib2.urlopen('http://ws.spotify.com/search/1/track.json?q=' + track_search.replace (" ", "+"))
+        data = json.load(response)
+        spotify_control.playTrack(data["tracks"][0]["href"])
+        return jsonify({'status':'success'})
+    except:
+        return jsonify({'error':'Invalid request'})
+
 @app.route('/playpause', methods=['GET'])
 def playpause():
     try:
