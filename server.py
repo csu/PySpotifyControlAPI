@@ -9,6 +9,12 @@ import json
 
 app = Flask(__name__)
 
+#### Helpers ####
+def searchPlay(query):
+    response = urllib2.urlopen('http://ws.spotify.com/search/1/track.json?q=' + query.replace (" ", "+"))
+    data = json.load(response)
+    spotify_control.playTrack(data["tracks"][0]["href"])
+
 #### POST routes ####
 
 @app.route('/queue', methods=['POST'])
@@ -26,9 +32,7 @@ def playTrackPost():
         if 'track_uri' in request.form:
             spotify_control.playTrack(request.form['track_uri'])
         elif 'track_search' in request.form:
-            response = urllib2.urlopen('http://ws.spotify.com/search/1/track.json?q=' + request.form['track_search'].replace (" ", "+"))
-            data = json.load(response)
-            spotify_control.playTrack(data["tracks"][0]["href"])
+            searchPlay(request.form['track_search'])
         return jsonify({'status':'success'})
     except:
         return jsonify({'error':'Invalid request'})
@@ -69,9 +73,7 @@ def playTrack(track_uri):
 @app.route('/play/search/<track_search>', methods=['GET'])
 def playSearchTrack(track_search):
     try:
-        response = urllib2.urlopen('http://ws.spotify.com/search/1/track.json?q=' + track_search.replace (" ", "+"))
-        data = json.load(response)
-        spotify_control.playTrack(data["tracks"][0]["href"])
+        searchPlay(track_search)
         return jsonify({'status':'success'})
     except:
         return jsonify({'error':'Invalid request'})
