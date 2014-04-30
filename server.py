@@ -28,7 +28,7 @@ def addToQueue():
 @app.route('/play', methods=['POST'])
 def playTrackPost():
     try:
-        print request.form
+        # print request.form
         if 'track_uri' in request.form:
             spotify_control.playTrack(request.form['track_uri'])
         elif 'track_search' in request.form:
@@ -172,8 +172,8 @@ def runQueue(queue):
             time.sleep(float(nextSong[1]))
 
 if __name__ == '__main__':
-    queue = Queue()
-    p = Process(target=runQueue, args=(queue,))
-    p.start()
+    # queue = Queue()
+    # p = Process(target=runQueue, args=(queue,))
+    # p.start()
     app.run(host='0.0.0.0', debug=True)
-    p.join()
+    # p.join()
