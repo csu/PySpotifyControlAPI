@@ -1,0 +1,3 @@
+[submodule "PyMultiScrobble"]
+	path = PyMultiScrobble
+	url = git@github.com:csu/PyMultiScrobble.git
