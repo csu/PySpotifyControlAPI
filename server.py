@@ -2,8 +2,14 @@
 from flask import Flask, jsonify, request, url_for, redirect
 from PySpotifyControl import spotify_control
 # from spotifyqueue import SpotifyQueue
-from multiprocessing import Process, Queue
-import time
+
+# # For queue:
+# from multiprocessing import Process, Queue
+# import time
+
+# For multiscrobbling:
+from PyMultiScrobble import MultiScrobbler
+
 import urllib2
 import json
 
@@ -13,24 +19,48 @@ app = Flask(__name__)
 def searchPlay(query):
     response = urllib2.urlopen('http://ws.spotify.com/search/1/track.json?q=' + query.replace (" ", "+"))
     data = json.load(response)
-    spotify_control.playTrack(data["tracks"][0]["href"])
+    playTrackHelper(data["tracks"][0]["href"])
+
+def playTrackHelper(uri):
+    # print 'playTrackHelper received ' + uri
+    spotify_control.playTrack(uri)
+    # print spotify_control.getSongArtist() + ' - ' + spotify_control.getSongName()
+    multiscrobbler.scrobbleAll(spotify_control.getSongArtist(), spotify_control.getSongName())
+    # if multiscrobbler is not None:
+    #     # time.sleep(1) # give spotify some time to respond to the applescript?
+    #     print spotify_control.getSongArtist() + ' - ' + spotify_control.getSongName()
+    #     multiscrobbler.scrobbleAll(spotify_control.getSongArtist(), spotify_control.getSongName())
+
+# def runQueue(queue):
+#     while True:
+#         if queue.empty():
+#             time.sleep(3) # keep checking until the queue isn't empty
+#         else:
+#             nextSong = queue.get()
+#             playTrackHelper(nextSong[0])
+#             time.sleep(float(nextSong[1]))
+
+#### Multiscrobbler routes ####
+@app.route('/multiscrobble/account', methods=['POST'])
+def addAccountToMultiScrobbler():
+    multiscrobbler.addAccount(request.form['username'], request.form['password'])
 
 #### POST routes ####
 
-@app.route('/queue', methods=['POST'])
-def addToQueue():
-    try:
-        queue.put([request.form['track_uri'], request.form['duration']])
-        return jsonify({'added':{'track_uri': request.form['track_uri'], 'duration': request.form['duration']}})
-    except:
-        return jsonify({'error':'Invalid request'})
+# @app.route('/queue', methods=['POST'])
+# def addToQueue():
+#     try:
+#         queue.put([request.form['track_uri'], request.form['duration']])
+#         return jsonify({'added':{'track_uri': request.form['track_uri'], 'duration': request.form['duration']}})
+#     except:
+#         return jsonify({'error':'Invalid request'})
 
 @app.route('/play', methods=['POST'])
 def playTrackPost():
     try:
         # print request.form
         if 'track_uri' in request.form:
-            spotify_control.playTrack(request.form['track_uri'])
+            playTrackHelper(request.form['track_uri'])
         elif 'track_search' in request.form:
             searchPlay(request.form['track_search'])
         return jsonify({'status':'success'})
@@ -63,9 +93,10 @@ def serveIndex():
         return jsonify({'error':'Invalid request'})
 
 @app.route('/play/<track_uri>', methods=['GET'])
-def playTrack(track_uri):
+def playTrackGet(track_uri):
     try:
-        spotify_control.playTrack(track_uri)
+        # print 'sending ' + track_uri
+        playTrackHelper(track_uri)
         return jsonify({'status':'success'})
     except:
         return jsonify({'error':'Invalid request'})
@@ -162,18 +193,16 @@ def jumpTo(position):
 #     programInfo['description'] = 'A REST API for controlling Spotify.'
 #     return jsonify(programInfo)
 
-def runQueue(queue):
-    while True:
-        if queue.empty():
-            time.sleep(3) # keep checking until the queue isn't empty
-        else:
-            nextSong = queue.get()
-            spotify_control.playTrack(nextSong[0])
-            time.sleep(float(nextSong[1]))
-
 if __name__ == '__main__':
+    # # For queue:
     # queue = Queue()
     # p = Process(target=runQueue, args=(queue,))
     # p.start()
+
+    # For multiscrobbling:
+    multiscrobbler = MultiScrobbler()
+
     app.run(host='0.0.0.0', debug=True)
+
+    # # For queue:
     # p.join()
