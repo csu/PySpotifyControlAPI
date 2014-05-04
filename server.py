@@ -45,7 +45,7 @@ def playTrackHelper(uri):
 @app.route('/multiscrobble/account', methods=['POST'])
 def addAccountToMultiScrobbler():
     multiscrobbler.addAccount(request.form['username'], request.form['password'])
-    return jsonify({'status':'success'})
+    return app.send_static_file('redirect.html')
 
 #### POST routes ####
 
