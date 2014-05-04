@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 from flask import Flask, jsonify, request, url_for, redirect
-from pyspotifycontrol import spotify_control
+from PySpotifyControl import spotify_control
 # from spotifyqueue import SpotifyQueue
 from multiprocessing import Process, Queue
 import time
@@ -58,7 +58,7 @@ def jumpToPost(position):
 @app.route('/', methods=['GET'])
 def serveIndex():
     try:
-        return app.send_static_file('index.html')
+        return app.send_static_file('search.html')
     except:
         return jsonify({'error':'Invalid request'})
 
