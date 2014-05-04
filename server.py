@@ -65,7 +65,8 @@ def playTrackPost():
             playTrackHelper(request.form['track_uri'])
         elif 'track_search' in request.form:
             searchPlay(request.form['track_search'])
-        return jsonify({'status':'success'})
+        # return jsonify({'status':'success'})
+        return app.send_static_file('redirect.html')
     except:
         return jsonify({'error':'Invalid request'})
 
@@ -73,7 +74,8 @@ def playTrackPost():
 def setVolumePost():
     try:
         spotify_control.setVolume(request.form['volume'])
-        return jsonify({'status':'success'})
+        # return jsonify({'status':'success'})
+        return app.send_static_file('redirect.html')
     except:
         return jsonify({'error':'Invalid request'})
 
@@ -81,7 +83,8 @@ def setVolumePost():
 def jumpToPost(position):
     try:
         spotify_control.jumpTo(request.form['position'])
-        return jsonify({'status':'success'})
+        # return jsonify({'status':'success'})
+        return app.send_static_file('redirect.html')
     except:
         return jsonify({'error':'Invalid request'})
 
@@ -99,7 +102,8 @@ def playTrackGet(track_uri):
     try:
         # print 'sending ' + track_uri
         playTrackHelper(track_uri)
-        return jsonify({'status':'success'})
+        # return jsonify({'status':'success'})
+        return app.send_static_file('redirect.html')
     except:
         return jsonify({'error':'Invalid request'})
 
@@ -107,7 +111,8 @@ def playTrackGet(track_uri):
 def playSearchTrack(track_search):
     try:
         searchPlay(track_search)
-        return jsonify({'status':'success'})
+        # return jsonify({'status':'success'})
+        return app.send_static_file('redirect.html')
     except:
         return jsonify({'error':'Invalid request'})
 
@@ -115,7 +120,8 @@ def playSearchTrack(track_search):
 def playpause():
     try:
         spotify_control.playPause()
-        return jsonify({'status':'success'})
+        # return jsonify({'status':'success'})
+        return app.send_static_file('redirect.html')
     except:
         return jsonify({'error':'Invalid request'})
 
@@ -123,7 +129,8 @@ def playpause():
 def play():
     try:
         spotify_control.play()
-        return jsonify({'status':'success'})
+        # return jsonify({'status':'success'})
+        return app.send_static_file('redirect.html')
     except:
         return jsonify({'error':'Invalid request'})
 
@@ -131,7 +138,8 @@ def play():
 def pause():
     try:
         spotify_control.pause()
-        return jsonify({'status':'success'})
+        # return jsonify({'status':'success'})
+        return app.send_static_file('redirect.html')
     except:
         return jsonify({'error':'Invalid request'})
 
@@ -139,7 +147,8 @@ def pause():
 def next():
     try:
         spotify_control.next()
-        return jsonify({'status':'success'})
+        # return jsonify({'status':'success'})
+        return app.send_static_file('redirect.html')
     except:
         return jsonify({'error':'Invalid request'})
 
@@ -147,7 +156,8 @@ def next():
 def previous():
     try:
         spotify_control.previous()
-        return jsonify({'status':'success'})
+        # return jsonify({'status':'success'})
+        return app.send_static_file('redirect.html')
     except:
         return jsonify({'error':'Invalid request'})
 
@@ -155,7 +165,8 @@ def previous():
 def volumeUp():
     try:
         spotify_control.volumeUp()
-        return jsonify({'status':'success'})
+        # return jsonify({'status':'success'})
+        return app.send_static_file('redirect.html')
     except:
         return jsonify({'error':'Invalid request'})
 
@@ -163,7 +174,8 @@ def volumeUp():
 def volumeDown():
     try:
         spotify_control.volumeDown()
-        return jsonify({'status':'success'})
+        # return jsonify({'status':'success'})
+        return app.send_static_file('redirect.html')
     except:
         return jsonify({'error':'Invalid request'})
 
@@ -171,7 +183,8 @@ def volumeDown():
 def setVolume(volume):
     try:
         spotify_control.setVolume(volume)
-        return jsonify({'status':'success'})
+        # return jsonify({'status':'success'})
+        return app.send_static_file('redirect.html')
     except:
         return jsonify({'error':'Invalid request'})
 
@@ -179,7 +192,8 @@ def setVolume(volume):
 def jumpTo(position):
     try:
         spotify_control.jumpTo(position)
-        return jsonify({'status':'success'})
+        # return jsonify({'status':'success'})
+        return app.send_static_file('redirect.html')
     except:
         return jsonify({'error':'Invalid request'})
 
