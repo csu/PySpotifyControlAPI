@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-from flask import Flask, jsonify, request, url_for, redirect
+from flask import Flask, jsonify, request, url_for, redirect, render_template
 from PySpotifyControl import spotify_control
 # from spotifyqueue import SpotifyQueue
 

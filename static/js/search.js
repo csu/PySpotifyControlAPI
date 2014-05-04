@@ -22,7 +22,7 @@ $( document ).ready(function() {
           var tracksLength = result.tracks.length,
               html = '';
           for (var i=0;i<tracksLength;i++) { 
-            if (result.tracks[i].album.availability.territories.indexOf(' GB ') !== -1) {
+            if ((result.tracks[i].album.availability.territories.indexOf(' US ') !== -1) || (result.tracks[i].album.availability.territories.indexOf('MX US') !== -1) || (result.tracks[i].album.availability.territories.indexOf('US') !== -1)) {
               html+='<li><a href="/play/' + result.tracks[i].href + '">' + result.tracks[i].artists[0].name + ' - ' + result.tracks[i].name + '</a></li>';
             }
           }
