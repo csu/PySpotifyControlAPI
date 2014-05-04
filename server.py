@@ -5,11 +5,11 @@ from PySpotifyControl import spotify_control
 
 # # For queue:
 # from multiprocessing import Process, Queue
-# import time
 
 # For multiscrobbling:
 from PyMultiScrobble import MultiScrobbler
 
+import time
 import urllib2
 import json
 
@@ -25,6 +25,7 @@ def playTrackHelper(uri):
     # print 'playTrackHelper received ' + uri
     spotify_control.playTrack(uri)
     # print spotify_control.getSongArtist() + ' - ' + spotify_control.getSongName()
+    time.sleep(2) # give spotify some time to respond to the applescript?
     multiscrobbler.scrobbleAll(spotify_control.getSongArtist(), spotify_control.getSongName())
     # if multiscrobbler is not None:
     #     # time.sleep(1) # give spotify some time to respond to the applescript?
@@ -44,6 +45,7 @@ def playTrackHelper(uri):
 @app.route('/multiscrobble/account', methods=['POST'])
 def addAccountToMultiScrobbler():
     multiscrobbler.addAccount(request.form['username'], request.form['password'])
+    return jsonify({'status':'success'})
 
 #### POST routes ####
 
