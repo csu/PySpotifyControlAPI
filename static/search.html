@@ -1,29 +1,57 @@
+<!DOCTYPE html>
 <html>
 <head>
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-    <script src="/static/js/search.js"></script>
+    <title>Spotify Control API</title>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <link href="./css/spotifycontrol.css" rel="stylesheet" type="text/css"/>
+    <link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'/>
+    <link rel="icon" type="image/ico" href="http://3.bp.blogspot.com/-v-3IkcAdwXw/UASv4nAh1SI/AAAAAAAAADQ/eiDOtu4mLyE/s200/Middle-Finger-psd63315.png"/>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="js/search.js"></script>
+
 </head>
+
 <body>
+<div id="wrapper">
 
-    <b>Add Last.fm Account:</b><br />
-    <form class="uriform" name="input" action="/multiscrobble/account" method="POST">
-        Username: <input type="text" id="username" name="username">
-        Password: <input type="password" id="password" name="password">
-        <input type="submit" id="submit" value="Submit">
-    </form>
-
-
-    <div id="wrapper">
-        <h1>Spotify Search</h1>
-        <div id="chooseArtist">
-            <form method="post" action="" id="artistSearch" >
-                <label>Search query: </label>
-                <input type="text" name="artist" id="artist" />
-                <input type="submit" value="Find Tracks" id="findTracks" />
-            </form>
-        </div>
-        <ul id="recommendations">
-        </ul>
+    <div id="header">
+        <span id="title">
+            PLACEHOLDER
+        </span>
+        <span id="signup">
+        <form action="/multiscrobble/account" method="POST">
+            <label>Login to Last.fm </label>
+            <input class="textbox login"value="Username" type="text" name="username" onfocus="if (this.value=='Username') this.value='';" onblur="if(this.value=='') this.value='Username';">
+            <input class="textbox login" value="Password" type="password" name="password" onfocus="if (this.value=='Password') this.value='';" onblur="if(this.value=='')this.value='Password';">
+            <input type="submit" id="submit" value="Login">
+        </span>
     </div>
+
+    <div id="content">
+
+        <div id="current">
+            <div id="cover">
+                <img src="http://upload.wikimedia.org/wikipedia/en/e/e1/Take_On_Me_cover.jpg">
+            </div>
+            <div id="info">
+                <span id="song_title">{{songName}}</span>
+                <span id="artist_name">{{songArtist}}</span>
+            </div>
+        </div>
+
+        <div id="lower">
+            <div id="form">
+                    <form method="post" action="" id="artistSearch" >
+                        <input value="Search" id="" class="textbox" type="text" name="artist" onfocus="if (this.value=='Search') this.value='';" onblur="if(this.value=='')this.value='Search';"/>
+                        <input type="submit" id="findTracks" value="Find Tracks">
+
+                    </form>
+            </div>
+                <ul id="recommendations">
+                </ul>
+        </div>
+    </div>
+
+</div>
 </body>
 </html>
