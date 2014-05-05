@@ -93,7 +93,7 @@ def jumpToPost(position):
 @app.route('/', methods=['GET'])
 def serveIndex():
     try:
-        return app.send_static_file('search.html')
+        return app.render_template('search.html', songName=spotify_control.getSongName(), songArtist=spotify_control.getSongArtist())
     except:
         return jsonify({'error':'Invalid request'})
 
