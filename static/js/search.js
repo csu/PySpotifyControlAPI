@@ -14,7 +14,6 @@ $( document ).ready(function() {
     $('#artist').on('input', function(e) {
       $recommendations.empty();
       var text = $(this).val();
-      console.log(text);
       $.getJSON("http://ws.spotify.com/search/1/track.json?q="+text,function(result) {
         if (result.tracks.length > 0) {
           var tracksLength = result.tracks.length,
