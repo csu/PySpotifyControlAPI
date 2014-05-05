@@ -139,6 +139,10 @@ label{
     margin-right: 10%;
 }
 
+#findTracks{
+    visibility:hidden;
+}
+
 input[type=submit]{
     cursor: pointer;
 }
