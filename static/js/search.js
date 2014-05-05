@@ -25,7 +25,7 @@ $( document ).ready(function() {
               html = '';
           for (var i=0;i<tracksLength;i++) { 
             if ((result.tracks[i].album.availability.territories.indexOf(' US ') !== -1) || (result.tracks[i].album.availability.territories.indexOf('MX US') !== -1) || (result.tracks[i].album.availability.territories.indexOf('US') !== -1)) {
-              html+='<li><a href="/play/' + result.tracks[i].href + '">' + result.tracks[i].artists[0].name + ' - ' + result.tracks[i].name + '</a></li>';
+              html+='<li class="results"><a href="/play/' + result.tracks[i].href + '">' + result.tracks[i].artists[0].name + ' - ' + result.tracks[i].name + '</a></li>';
             }
           }
           $recommendations.append(html);

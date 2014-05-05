@@ -8,7 +8,6 @@
     <link rel="icon" type="image/ico" href="http://3.bp.blogspot.com/-v-3IkcAdwXw/UASv4nAh1SI/AAAAAAAAADQ/eiDOtu4mLyE/s200/Middle-Finger-psd63315.png"/>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
     <script src="../static/js/search.js"></script>
-
 </head>
 
 <body>
@@ -32,7 +31,7 @@
 
         <div id="current">
             <div id="cover">
-                <img src="http://upload.wikimedia.org/wikipedia/en/e/e1/Take_On_Me_cover.jpg">
+                <img id="album_art" src="http://upload.wikimedia.org/wikipedia/en/e/e1/Take_On_Me_cover.jpg">
             </div>
             <div id="info">
                 <span id="song_title">{{ songName }}</span>
@@ -54,5 +53,20 @@
     </div>
 
 </div>
+<script>
+    function setAlbumArt(data){
+        var album_art_id = data['thumbnail_url'].substr(data['thumbnail_url'].lastIndexOf('/') + 1);
+        var album_art_url = "https://d3rt1990lpmkn.cloudfront.net/640/" + album_art_id;
+        // console.log(album_art_url);
+        // $('#wrapper #content #cover #album_art').click(function(e){
+        //     console.log('clicked');
+        //     $(this).attr("src", album_art_url);
+        // });
+        $('#wrapper #content #cover #album_art').attr("src", album_art_url);
+        // $('.cover').children('img').attr("src", album_art_url)
+        // $('#album_art').attr("src", album_art_url);
+    }
+</script>
+<script type="text/javascript" src="https://embed.spotify.com/oembed/?url={{ songURI }}&callback=setAlbumArt"></script>
 </body>
 </html>
