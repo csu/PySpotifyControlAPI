@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-from flask import Flask, jsonify, request, url_for, redirect, render_template
+from flask import Flask, render_template, jsonify, request, url_for, redirect
 from PySpotifyControl import spotify_control
 # from spotifyqueue import SpotifyQueue
 
@@ -92,10 +92,13 @@ def jumpToPost(position):
 
 @app.route('/', methods=['GET'])
 def serveIndex():
-    try:
-        return app.render_template('search.html', songName=spotify_control.getSongName(), songArtist=spotify_control.getSongArtist())
-    except:
-        return jsonify({'error':'Invalid request'})
+    # try:
+    name = spotify_control.getSongName()
+    artist = spotify_control.getSongArtist()
+    print name + " " + artist
+    return render_template('search.html', songName=name, songArtist=artist)
+    # except:
+    #     return jsonify({'error':'Invalid request'})
 
 @app.route('/play/<track_uri>', methods=['GET'])
 def playTrackGet(track_uri):
