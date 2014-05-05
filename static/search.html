@@ -34,15 +34,15 @@
                 <img src="http://upload.wikimedia.org/wikipedia/en/e/e1/Take_On_Me_cover.jpg">
             </div>
             <div id="info">
-                <span id="song_title">Song Title</span>
-                <span id="artist_name">Artist Name</span>
+                <span id="song_title">{{songName}}</span>
+                <span id="artist_name">{{songArtist}}</span>
             </div>
         </div>
 
         <div id="lower">
             <div id="form">
                     <form method="post" action="" id="artistSearch" >
-                        <input value="Search" id="artist" class="textbox" type="text" name="artist" onfocus="if (this.value=='Search') this.value='';" onblur="if(this.value=='')this.value='Search';"/>
+                        <input value="Search" id="" class="textbox" type="text" name="artist" onfocus="if (this.value=='Search') this.value='';" onblur="if(this.value=='')this.value='Search';"/>
                         <input type="submit" id="findTracks" value="Find Tracks">
 
                     </form>
