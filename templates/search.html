@@ -57,14 +57,7 @@
     function setAlbumArt(data){
         var album_art_id = data['thumbnail_url'].substr(data['thumbnail_url'].lastIndexOf('/') + 1);
         var album_art_url = "https://d3rt1990lpmkn.cloudfront.net/640/" + album_art_id;
-        // console.log(album_art_url);
-        // $('#wrapper #content #cover #album_art').click(function(e){
-        //     console.log('clicked');
-        //     $(this).attr("src", album_art_url);
-        // });
         $('#wrapper #content #cover #album_art').attr("src", album_art_url);
-        // $('.cover').children('img').attr("src", album_art_url)
-        // $('#album_art').attr("src", album_art_url);
     }
 </script>
 <script type="text/javascript" src="https://embed.spotify.com/oembed/?url={{ songURI }}&callback=setAlbumArt"></script>
