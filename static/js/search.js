@@ -2,8 +2,10 @@ $( document ).ready(function() {
     'use strict';
 
     var $context = $('#wrapper');
+    var $recommendations = $context.find('#content');
+    $recommendations = $recommendations.find('#lower');
+    $recommendations = $recommendations.find('#recommendations');
     var $artist = $context.find('#artist');
-    var $recommendations = $context.find('#recommendations');
     var $findTracks = $context.find('#findTracks');
     var $artistSearch = $context.find('#artistSearch');
 
