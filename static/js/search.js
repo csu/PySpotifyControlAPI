@@ -16,10 +16,14 @@ $( document ).ready(function() {
       var text = $(this).val();
       $.getJSON("http://ws.spotify.com/search/1/track.json?q="+text,function(result) {
         if (result.tracks.length > 0) {
-          var tracksLength = result.tracks.length,
-              html = '';
+          var tracksLength = result.tracks.length;
+          var html = '';
+          if (tracksLength > 6) {
+            tracksLength = 6;
+          }
           for (var i=0;i<tracksLength;i++) { 
-            if ((result.tracks[i].album.availability.territories.indexOf(' US ') !== -1) || (result.tracks[i].album.availability.territories.indexOf('MX US') !== -1) || (result.tracks[i].album.availability.territories.indexOf('US') !== -1)) {
+            // if ((result.tracks[i].album.availability.territories.indexOf(' US ') !== -1) || (result.tracks[i].album.availability.territories.indexOf('MX US') !== -1) || (result.tracks[i].album.availability.territories.indexOf('US') !== -1)) {
+              if ((result.tracks[i].album.availability.territories.indexOf(' US ') !== -1) || (result.tracks[i].album.availability.territories.indexOf('US') !== -1)) {
               html+='<li class="results"><a href="/play/' + result.tracks[i].href + '">' + result.tracks[i].artists[0].name + ' - ' + result.tracks[i].name + '</a></li>';
             }
           }

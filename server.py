@@ -22,13 +22,12 @@ def searchPlay(query):
     playTrackHelper(data["tracks"][0]["href"])
 
 def playTrackHelper(uri):
-    # print 'playTrackHelper received ' + uri
     spotify_control.playTrack(uri)
-    # print spotify_control.getSongArtist() + ' - ' + spotify_control.getSongName()
-    time.sleep(2) # give spotify some time to respond to the applescript?
+    time.sleep(2) # give spotify some time to respond to the applescript
     multiscrobbler.scrobbleAll(spotify_control.getSongArtist(), spotify_control.getSongName())
+    ## safer version (don't have to comment out method when multiscrobbler is disabled)
     # if multiscrobbler is not None:
-    #     # time.sleep(1) # give spotify some time to respond to the applescript?
+    #     # time.sleep(2) # give spotify some time to respond to the applescript?
     #     print spotify_control.getSongArtist() + ' - ' + spotify_control.getSongName()
     #     multiscrobbler.scrobbleAll(spotify_control.getSongArtist(), spotify_control.getSongName())
 
@@ -65,7 +64,6 @@ def playTrackPost():
             playTrackHelper(request.form['track_uri'])
         elif 'track_search' in request.form:
             searchPlay(request.form['track_search'])
-        # return jsonify({'status':'success'})
         return app.send_static_file('redirect.html')
     except:
         return jsonify({'error':'Invalid request'})
@@ -74,7 +72,6 @@ def playTrackPost():
 def setVolumePost():
     try:
         spotify_control.setVolume(request.form['volume'])
-        # return jsonify({'status':'success'})
         return app.send_static_file('redirect.html')
     except:
         return jsonify({'error':'Invalid request'})
@@ -83,7 +80,6 @@ def setVolumePost():
 def jumpToPost(position):
     try:
         spotify_control.jumpTo(request.form['position'])
-        # return jsonify({'status':'success'})
         return app.send_static_file('redirect.html')
     except:
         return jsonify({'error':'Invalid request'})
@@ -92,17 +88,15 @@ def jumpToPost(position):
 
 @app.route('/', methods=['GET'])
 def serveIndex():
-    # try:
-    return render_template('search.html', songName=spotify_control.getSongName(), songArtist=spotify_control.getSongArtist(), songURI=spotify_control.getSongId())
-    # except:
-    #     return jsonify({'error':'Invalid request'})
+    try:
+        return render_template('search.html', songName=spotify_control.getSongName(), songArtist=spotify_control.getSongArtist(), songURI=spotify_control.getSongId())
+    except:
+        return jsonify({'error':'Invalid request'})
 
 @app.route('/play/<track_uri>', methods=['GET'])
 def playTrackGet(track_uri):
     try:
-        # print 'sending ' + track_uri
         playTrackHelper(track_uri)
-        # return jsonify({'status':'success'})
         return app.send_static_file('redirect.html')
     except:
         return jsonify({'error':'Invalid request'})
@@ -111,7 +105,6 @@ def playTrackGet(track_uri):
 def playSearchTrack(track_search):
     try:
         searchPlay(track_search)
-        # return jsonify({'status':'success'})
         return app.send_static_file('redirect.html')
     except:
         return jsonify({'error':'Invalid request'})
@@ -120,7 +113,6 @@ def playSearchTrack(track_search):
 def playpause():
     try:
         spotify_control.playPause()
-        # return jsonify({'status':'success'})
         return app.send_static_file('redirect.html')
     except:
         return jsonify({'error':'Invalid request'})
@@ -129,7 +121,6 @@ def playpause():
 def play():
     try:
         spotify_control.play()
-        # return jsonify({'status':'success'})
         return app.send_static_file('redirect.html')
     except:
         return jsonify({'error':'Invalid request'})
@@ -138,7 +129,6 @@ def play():
 def pause():
     try:
         spotify_control.pause()
-        # return jsonify({'status':'success'})
         return app.send_static_file('redirect.html')
     except:
         return jsonify({'error':'Invalid request'})
@@ -147,7 +137,6 @@ def pause():
 def next():
     try:
         spotify_control.next()
-        # return jsonify({'status':'success'})
         return app.send_static_file('redirect.html')
     except:
         return jsonify({'error':'Invalid request'})
@@ -156,7 +145,6 @@ def next():
 def previous():
     try:
         spotify_control.previous()
-        # return jsonify({'status':'success'})
         return app.send_static_file('redirect.html')
     except:
         return jsonify({'error':'Invalid request'})
@@ -165,7 +153,6 @@ def previous():
 def volumeUp():
     try:
         spotify_control.volumeUp()
-        # return jsonify({'status':'success'})
         return app.send_static_file('redirect.html')
     except:
         return jsonify({'error':'Invalid request'})
@@ -174,7 +161,6 @@ def volumeUp():
 def volumeDown():
     try:
         spotify_control.volumeDown()
-        # return jsonify({'status':'success'})
         return app.send_static_file('redirect.html')
     except:
         return jsonify({'error':'Invalid request'})
@@ -183,7 +169,6 @@ def volumeDown():
 def setVolume(volume):
     try:
         spotify_control.setVolume(volume)
-        # return jsonify({'status':'success'})
         return app.send_static_file('redirect.html')
     except:
         return jsonify({'error':'Invalid request'})
@@ -192,23 +177,9 @@ def setVolume(volume):
 def jumpTo(position):
     try:
         spotify_control.jumpTo(position)
-        # return jsonify({'status':'success'})
         return app.send_static_file('redirect.html')
     except:
         return jsonify({'error':'Invalid request'})
-
-# @app.route('/', methods=['GET'])
-# def index():
-#     programInfo = dict()
-#     programInfo['author'] = 'Christopher Su'
-#     programInfo['author_url'] = 'http://christophersu.net/'
-#     programInfo['name'] = 'PySpotifyControl'
-#     programInfo['version'] = '0.0.1'
-#     programInfo['project_url'] = 'http://github.com/csu'
-#     programInfo['source_url'] = 'http://github.com/csu/PySpotifyControl/'
-#     programInfo['description'] = 'A REST API for controlling Spotify.'
-#     return jsonify(programInfo)
-
 if __name__ == '__main__':
     # # For queue:
     # queue = Queue()
