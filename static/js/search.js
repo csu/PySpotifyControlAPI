@@ -11,15 +11,11 @@ $( document ).ready(function() {
 
     $artist.focus();
 
-    $artistSearch.submit(function(e) {
-      e.preventDefault();
-    });
-
-    $findTracks.click(function(e) {
-      e.preventDefault();
+    $('#artist').on('input', function(e) {
       $recommendations.empty();
-      var artist = $artist.val();
-      $.getJSON("http://ws.spotify.com/search/1/track.json?q="+artist,function(result) {
+      var text = $(this).val();
+      console.log(text);
+      $.getJSON("http://ws.spotify.com/search/1/track.json?q="+text,function(result) {
         if (result.tracks.length > 0) {
           var tracksLength = result.tracks.length,
               html = '';
@@ -30,7 +26,7 @@ $( document ).ready(function() {
           }
           $recommendations.append(html);
         } else {
-          $recommendations.append('<li>No matches returned for \'' + artist + '\'</li>');
+          $recommendations.append('<li>No matches returned for \'' + text + '\'</li>');
         }
       });
     });
