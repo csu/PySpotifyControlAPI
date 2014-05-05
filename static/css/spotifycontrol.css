@@ -1,3 +1,14 @@
+@font-face
+{
+    font-family: iconFont;
+    src: url(../fonts/heydings_controls.ttf);
+}
+
+#icons {
+    font-family: iconFont;
+    font-size: 30pt;
+}
+
 html{
     font-size:0;
     font-size:400;
@@ -162,6 +173,5 @@ li{
     #content{
         width:;
     }
-
 
 }
