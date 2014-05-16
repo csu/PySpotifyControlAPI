@@ -9,6 +9,9 @@ from PySpotifyControl import spotify_control
 # For multiscrobbling:
 from PyMultiScrobble import MultiScrobbler
 
+# For speech recognition:
+from PySpotifySpeechControl import SpeechRecognization
+
 import time
 import urllib2
 import json
@@ -45,6 +48,22 @@ def playTrackHelper(uri):
 def addAccountToMultiScrobbler():
     multiscrobbler.addAccount(request.form['username'], request.form['password'])
     return app.send_static_file('redirect.html')
+
+#### Speech recognization routes ####
+@app.route('/speech', methods=['GET', 'POST'])
+def recognizeSpeech():
+    if request.method == 'POST':
+        try:
+            speech.actionFromInput(request.form['speech_input'])
+            return jsonify({'success': 'success'})
+        except:
+            return jsonify({'error': 'Invalid request'})
+    elif  request.method == 'GET':
+        try:
+            return app.send_static_file('speech.html')
+        except:
+            return jsonify({'error':'Invalid request'})
+
 
 #### POST routes ####
 
@@ -189,6 +208,9 @@ if __name__ == '__main__':
 
     # For multiscrobbling:
     multiscrobbler = MultiScrobbler()
+
+    # For speech recognition:
+    speech = SpeechRecognization()
 
     app.run(host='0.0.0.0', debug=True)
 
