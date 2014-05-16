@@ -4,3 +4,6 @@
 [submodule "PySpotifyControl"]
 	path = PySpotifyControl
 	url = git@github.com:csu/PySpotifyControl.git
+[submodule "PySpotifySpeechControl"]
+	path = PySpotifySpeechControl
+	url = git@github.com:csu/PySpotifySpeechControl.git
