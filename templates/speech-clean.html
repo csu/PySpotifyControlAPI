@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Spotify Control API</title>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <link href="../static/css/spotifycontrol.css" rel="stylesheet" type="text/css"/>
+    <link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'/>
+    <link rel="icon" type="image/ico" href="http://3.bp.blogspot.com/-v-3IkcAdwXw/UASv4nAh1SI/AAAAAAAAADQ/eiDOtu4mLyE/s200/Middle-Finger-psd63315.png"/>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="../static/js/search.js"></script>
+    <script src="http://albumcolors.chengyinliu.com/albumcolors.js"></script>
+</head>
+
+<body>
+<div id="wrapper">
+
+    <div id="header">
+        <span id="title">
+            CONTROL
+        </span>
+        <span id="signup">
+        <form action="/multiscrobble/account" method="POST">
+            <label>Login to Last.fm </label>
+            <input class="textbox login"value="Username" type="text" name="username" onfocus="if (this.value=='Username') this.value='';" onblur="if(this.value=='') this.value='Username';">
+            <input class="textbox login" value="Password" type="password" name="password" onfocus="if (this.value=='Password') this.value='';" onblur="if(this.value=='')this.value='Password';">
+            <input type="submit" id="submit" value="Login">
+        </form>
+        </span>
+    </div>
+
+    <div id="content">
+
+        <div id="current">
+            <div id="cover">
+                <img id="album_art" src="">
+            </div>
+            <div id="info">
+                <span id="song_title">{{ songName }}</span>
+                <span id="artist_name">{{ songArtist }}</span>
+                <span id="icons"><a href="/previous">B</a> <a href="/pause">u</a> <a href="/play">P</a> <a href="/next">F</a></span>
+            </div>
+        </div>
+
+        <div id="lower">
+            <div id="form">
+                    <form method="post" action="" id="artistSearch" >
+                        <input value="Search" id="artist" class="textbox" type="text" name="artist" onfocus="if (this.value=='Search') this.value='';" onblur="if(this.value=='')this.value='Search';"/>
+                        <input type="submit" id="findTracks" value="Find Tracks"/>
+                    </form>
+            </div>
+                <ul id="recommendations">
+                </ul>
+        </div>
+    </div>
+
+</div>
+<script>
+    function setAlbumArt(data){
+        var album_art_id = data['thumbnail_url'].substr(data['thumbnail_url'].lastIndexOf('/') + 1);
+        var album_art_url = "https://d3rt1990lpmkn.cloudfront.net/640/" + album_art_id;
+        $('#wrapper #content #cover #album_art').attr("src", album_art_url);
+    }
+</script>
+<script type="text/javascript" src="https://embed.spotify.com/oembed/?url={{ songURI }}&callback=setAlbumArt"></script>
+</body>
+</html>

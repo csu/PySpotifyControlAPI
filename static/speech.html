@@ -20,7 +20,6 @@
     "stylesheet">
     <link href="http://google.com/intl/en/chrome/assets/common/css/chrome.min.css" rel="stylesheet">
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-</script>
     <style>
 #info {
     font-size: 20px;
@@ -352,6 +351,7 @@ var chrmMenuBar = new chrm.ui.MenuBar();
         }
         final_transcript = '';
         recognition.lang = select_dialect.value;
+        console.log(recognition.lang)
         recognition.start();
         ignore_onend = false;
         final_span.innerHTML = '';
