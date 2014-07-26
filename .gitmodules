@@ -1,9 +1,9 @@
 [submodule "PyMultiScrobble"]
 	path = PyMultiScrobble
-	url = git@github.com:csu/PyMultiScrobble.git
+	url = https://github.com/csu/PyMultiScrobble.git
 [submodule "PySpotifyControl"]
 	path = PySpotifyControl
-	url = git@github.com:csu/PySpotifyControl.git
+	url = https://github.com/csu/PySpotifyControl.git
 [submodule "PySpotifySpeechControl"]
 	path = PySpotifySpeechControl
-	url = git@github.com:csu/PySpotifySpeechControl.git
+	url = https://github.com/csu/PySpotifySpeechControl.git
