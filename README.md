@@ -1,10 +1,10 @@
 PySpotifyControlAPI
 ================
 
-A Flask app uses PySpotifyControl and PyMultiScrobble to allow users to control a Spotify desktop client through a REST API.
+A Flask app that uses [PySpotifyControl](https://github.com/csu/PySpotifyControl) to allow users to control a Spotify desktop client through a REST API and front end web interface.
 
 ## Features
-* Can scrobble plays to the Last.fm accounts of all listeners
+* Can scrobble plays to the Last.fm accounts of all listeners (using [PyMultiScrobble](https://github.com/csu/PyMultiScrobble))
 * API endpoints for playing a specific song, play/pause, volume up/down, next/previous song, and getting the current song's name and artist.
 
 ## Requirements
@@ -12,9 +12,11 @@ A Flask app uses PySpotifyControl and PyMultiScrobble to allow users to control 
 * Spotify for Mac
 
 ## Installation
-* Clone from GitHub, including submodules
-* Use pip to install dependencies from requirements.txt
-* Run `python server.py`
+
+    git clone https://github.com/csu/PySpotifyControlAPI.git
+    cd PySpotifyControlAPI
+    pip install -r requirements.txt
+    python server.py
 
 ## Contributing
 Pull requests are welcome. Submit feature requests and bugs through GitHub issues.
