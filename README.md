@@ -5,6 +5,7 @@ A Flask app that uses [PySpotifyControl](https://github.com/csu/PySpotifyControl
 
 ## Features
 * Can scrobble plays to the Last.fm accounts of all listeners (using [PyMultiScrobble](https://github.com/csu/PyMultiScrobble))
+* Speech control (using [PySpotifySpeechControl](https://github.com/csu/PySpotifySpeechControl))
 * API endpoints for playing a specific song, play/pause, volume up/down, next/previous song, and getting the current song's name and artist.
 
 ## Requirements
