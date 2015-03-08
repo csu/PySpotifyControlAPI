@@ -9,6 +9,8 @@ A Flask app that uses [PySpotifyControl](https://github.com/csu/PySpotifyControl
 * Can scrobble plays to the Last.fm accounts of all listeners (using [PyMultiScrobble](https://github.com/csu/PyMultiScrobble)).
 * Speech control (using [PySpotifySpeechControl](https://github.com/csu/PySpotifySpeechControl)).
 
+![](http://i.imgur.com/2U92NQD.jpg)
+
 ## Requirements
 * Mac OS X
 * Spotify for Mac
