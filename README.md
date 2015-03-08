@@ -11,6 +11,8 @@ A Flask app that uses [PySpotifyControl](https://github.com/csu/PySpotifyControl
 
 ![](http://i.imgur.com/2U92NQD.jpg)
 
+![](http://i.imgur.com/JcrQeAz.jpg)
+
 ## Requirements
 * Mac OS X
 * Spotify for Mac
